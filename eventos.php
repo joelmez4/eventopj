@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es">
   <head>
-
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -14,7 +14,7 @@
     <script src="js/alertify.js"></script>
     <script src="js/bootstrap.js"></script>
     <script type="text/javascript">
-    
+        //para insertar ponentes en el text area cuando se selecciones en el combo box
         function actualizar(select){
             var val = select.value;
             document.getElementById('inserta_ponentes').value += "Dr. "+val+"\n";
@@ -23,16 +23,19 @@
   </head>
   <body background="images/pj2-transparente.png">
   
-   
+    <!-- Inicio conexion con base de datos-->
+    
+    <!-- Fin conexion con base de datos-->
+    <!-- inicio menu -->
       <?php
           include('maqueta/menu.php');   
       ?>
-  
+    <!-- fin menu -->
 
     <br/>
     <br/>
     <br/>
-  
+    <!-- Inicio Buscador-->
     <div class="container-fluid table-responsive">
       <div class="d-inline container text-center"><h3><span class="badge badge-light">Eventos</span></h3></div>
       <div class="container text-danger"> * busqueda por nombre evento y/o fechas asignadas </div>
@@ -55,16 +58,19 @@
           </div>
         </div>
       </form>
-     
+      <!-- Fin buscador-->
+      <!-- Inicio Contenido-->
       <div class="container" id="datos_eventos">
 
       </div>
     </div>
-
+  <!-- Fin Contenido-->
+  <!-- Inicio Pie de Pagina-->
     <?php
       include('maqueta/footer.php');   
     ?>
- 
+  <!-- Fin Pie de Pagina-->
+  <!-- Modal para insertar evento -->
   <div class="modal fade" id="registroevento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
       <div class="modal-content">
@@ -75,7 +81,7 @@
           </button>
         </div>
         <div class="modal-body">
-   
+          <!-- formulario registro evento-->
           <form class="form" method="POST" action="">
               <div class="form-group row">
                 <label for="" class="col-sm-3 col-form-label">Tipo de Evento</label>
@@ -104,13 +110,13 @@
                     <option selected>...Seleccione una Opcion...</option>
                     <?php
                       $carga_expositores="select nombre_completo from expositor";
-                      $resultado=$miconex->query($carga_expositores); 
+                      $resultado=$miconex->query($carga_expositores); // ejecutamos la consulta y lo guardamos en la variable resultado
                       if(!$resultado=$miconex->query($carga_expositores))
                       {
                           die ("No se pudo ejecutar la consulta por error en:[".$miconex->error."]");
                       }
                       if($resultado->num_rows>0){
-                        while($fila=$resultado->fetch_assoc()) 
+                        while($fila=$resultado->fetch_assoc()) //pasamos los resualdos de la consulta con fetch_assoc a un tipo arreglo de variable fila
                         {
                           echo "<option id=''>".$fila['nombre_completo']."</option>";
                         }
@@ -187,7 +193,7 @@
                $lugar_evento=$_POST['lugar_evento'];
                $direccion_evento=$_POST['direccion_evento'];
                $fecha_evento=$_POST['fecha_evento'];
-               $hora_evento=hora_bd($_POST['hora_evento']);
+               $hora_evento=hora_bd($_POST['hora_evento']); //llamar a hora_bs para insertar en laa base de datos
               
                //consulta para insertar evento
                  $consulta="insert into evento values('','$tipo_evento','$nombre_evento','$ponentes','$lugar_evento','$direccion_evento','$fecha_evento','$hora_evento','abierto')";
@@ -197,7 +203,7 @@
                  }
                  else
                  {
-                   echo "<script>alertify.success('Registrado Correctamente');</script>"; 
+                   echo "<script>alertify.success('Registrado Correctamente');</script>"; //codigo de js alertify
                  }
                
              }
@@ -206,12 +212,13 @@
       </div>
     </div>
   </div>
-   
+  <!-- Fin para insertar usuario -->
+  <!-- Fin Modal para insertar usuario -->    
     <script src="js/jquery.js"></script>
   
     <script src="js/main.js"></script>
    
- 
+    <!-- Scrip para hora - time -->  
   
   </body>
 </hmtl>

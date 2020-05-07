@@ -57,17 +57,24 @@
                                 $nombre=$fila['nombres_user'];
                                 $id_usuario=$fila['id_usuario'];
                                 $tipo_usuario=$fila['tipo'];
-                                $_SESSION['nombre']=$nombre; 
+                                $_SESSION['nombre']=$nombre; // Iniciando la sesion
                                 $_SESSION['id_usuario']=$id_usuario;
                                 $_SESSION['tipo']=$tipo_usuario;
-                                echo "<script>alertify.success('Usuario Encontrado');</script>";
-                                echo "<div class='alert alert-success container' role='alert'>Usuario encontrado, redireccionando...</div>"; 
-                                header("refresh:3;url=eventos.php"); 
+                                echo "<script>alertify.success('Usuario Encontrado');</script>"; //codigo de js alertify
+                                echo "<div class='alert alert-success container' role='alert'>Usuario encontrado, redireccionando...</div>"; //mensaje
+                                // Duerme durante cinco segundos.
+                                 //sleep(5); pero no muestra mensaje
+                                //Establecer el encabezado de actualización utilizando PHP.
+                                echo "<script>setTimeout(function () {
+                                    // Redirigir con JavaScript
+                                    window.location.href= 'eventos.php';
+                                 }, 3000);</script>";
+                                
                             }
                             else
                             {                
-                                echo "<script>alertify.error('No se encontro usuario');</script>"; 
-                                echo "<div class='alert alert-success container' role='alert'>No se encontro usuario</div>";
+                                echo "<script>alertify.error('No se encontro usuario');</script>"; //codigo de js alertify
+                                echo "<div class='alert alert-success container' role='alert'>No se encontro usuario</div>"; //mensaje
                             }
                         }
                         

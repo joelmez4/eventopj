@@ -1,18 +1,20 @@
 <?php
     require('../conexion.php');
-    $salida=""; 
+    $salida=""; //todo lo que se mostrara en la pagina de index.php
     $query="select id_usuario,dni_usuario,CONCAT(nombres_user,' ',apellidos_user) as nombres_completos,tipo,correo from usuario";
     if(isset($_POST['consulta'])){
-        $q=$miconex->real_escape_string($_POST['consulta']); 
+        $q=$miconex->real_escape_string($_POST['consulta']); //cuestion de seguridad por si en la caj de texto viene un caracter especial
         $query="select id_usuario,dni_usuario,CONCAT(nombres_user,' ',apellidos_user) as nombres_completos,tipo,correo from usuario 
                 where id_usuario like '%".$q."%' OR dni_usuario like '%".$q."%' OR CONCAT(nombres_user,' ',apellidos_user) like '%".$q."%' OR tipo like '%".$q."%' OR correo like '%".$q."%'";
     }
-    $resultado=$miconex->query($query); 
+    $resultado=$miconex->query($query); // ejecutamos la consulta y lo guardamos en la variable resultado
     if(!$resultado=$miconex->query($query))
     {
         die ("No se pudo ejecutar la consulta por error en:[".$miconex->error."]");
     }
-    if($resultado->num_rows>0){  
+    if($resultado->num_rows>0){  //si se encontro un elemento en la consulta
+        //concatenamos la variable salida puesto que salida es lo que mostrara al final en la pagina index.htmls
+        //class=d-none d-sm-block ---Solo cuando sea pequeño que se ocultela columna-->
         $salida.="<p class='lead'><span>Cantidad de Usuarios: <b>".$resultado->num_rows."</b></span></p>
                 <table class='table table-hover table-active container mt-0 table-sm'>
                     <thead class='thead-dark'>
@@ -26,9 +28,9 @@
                         </tr>
                     </thead>
                     <tbody>"; 
-        while($fila=$resultado->fetch_assoc()) 
+        while($fila=$resultado->fetch_assoc()) //pasamos los resualdos de la consulta con fetch_assoc a un tipo arreglo de variable fila
             {
-                
+                //seguimos concatenando la variable salida
                 $salida.=" <tr>
                                 <td>".$fila['id_usuario']."</td>
                                 <td class='d-none d-sm-block'>".$fila['dni_usuario']."</td>

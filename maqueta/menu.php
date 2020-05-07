@@ -5,7 +5,8 @@
       if($_SESSION['id_usuario']=="")
       {
           header("Location: index.php");    
-      }  
+      } 
+      $nombre_usuario_sesion= $_SESSION['nombre'];
     ?>  
     <div class="container-fluid bg-dark fixed-top text-center">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark container">
@@ -37,8 +38,8 @@
                     <a class="nav-item nav-link text-white bg-dark rounded" href="expositor.php">Expositor</a>
                     <a class="nav-item nav-link text-white bg-dark rounded" href="usuarios.php">Usuarios</a>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white bg-dark rounded" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $_SESSION['nombre']; ?>
+                        <a class="nav-link dropdown-toggle text-white bg-dark rounded" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?php echo $nombre_usuario_sesion; ?>
                         </a>
                         <div class="dropdown-menu bg-dark text-center  " style="border:none;" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item text-white bg-dark rounded" href="#">Ver Perfil</a>

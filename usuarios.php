@@ -17,16 +17,18 @@
   </head>
   <body background="images/pj2-transparente.png">
   
-
+    <!-- Inicio conexion con base de datos--> 
+    <!-- Fin conexion con base de datos-->
+    <!-- inicio menu -->
       <?php
           include('maqueta/menu.php');   
       ?>
-
+    <!-- fin menu -->
     <br/>
     <br/>
     <br/>
     <div style="min-height: 100vh;">
-       
+          <!-- Inicio Buscador-->
           <div class="container-fluid table-responsive">
             <div class="d-inline container text-center"><h3><span class="badge badge-light">Usuarios Activados</span></h3></div>
             <form class="container">
@@ -37,7 +39,8 @@
                 </div>
               </div>
             <form>
-        
+            <!-- Fin buscador-->
+            <!-- Inicio Contenido-->
             <div class="container" id="datos_usuarios">
 
             </div>
@@ -51,11 +54,13 @@
             </table>
           </div>
       </div>
-     
+        <!-- Fin Contenido-->
+        <!-- Inicio Pie de Pagina-->
           <?php
             include('maqueta/footer.php');   
           ?>
-     
+        <!-- Fin Pie de Pagina-->
+        <!-- Modal para insertar usuario -->
         <div class="modal fade" id="registrousuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -66,7 +71,7 @@
                 </button>
               </div>
               <div class="modal-body">
-              
+                <!-- formulario buscar dni -->
                 <form class="form-inline" method="post">
                   <div class="form-group mb-2">
                     <label for="exampleFormControlInput1">DNI:</label>
@@ -76,7 +81,8 @@
                   </div>
                   <button type="button" class="btn btn-dark  mx-3 mb-2 ml-sm-1" id="botoncito">Buscar</button>
                 </form>
-              
+                <!-- fin formulario buscar dni -->
+                <!-- script busqueda dni -->
                 <script>
                   $(function(){
                       $('#botoncito').on('click', function(){
@@ -97,7 +103,9 @@
                       });
                   });
                 </script>
-               
+                <!-- script busqueda dni -->
+                <!-- fin busqueda dni -->
+                <!-- formulario registro de datos-->
                 <form autocomplete="off" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
                   <div class="form-row d-flex flex-column flex-sm-row mt-sm-2">
                     <input type="hidden" class="form-control" id="mostrar_dni" name="dni_usuario"> 
@@ -145,7 +153,8 @@
           </div>
         </div>
       
-  
+  <!-- Fin para insertar usuario -->
+  <!-- Fin Modal para insertar usuario -->    
     <script src="js/jquery.js"></script>
     <script src="js/main.js"></script>
   </body>

@@ -45,23 +45,23 @@
                                 {
                                     die ("No se pudo ejecutar la consulta por error en:[".$miconex->error."]");
                                 }
-                                
+                                //si encuentra inscrito con el mismo nombre
                                 if($resultado->num_rows==0)
                                 {
-                                    echo "<script>alertify.error('no existe usuario, comuniquese con el administrador del sistema');</script>";
-                                    echo "<div class='alert alert-danger container' role='alert'>no existe usuario, comuniquese con el administrador del sistema</div>"; 
+                                    echo "<script>alertify.error('no existe usuario, comuniquese con el administrador del sistema');</script>";//codigo de js alertify
+                                    echo "<div class='alert alert-danger container' role='alert'>no existe usuario, comuniquese con el administrador del sistema</div>"; //mensaje
                                 }
                                 if($fila=$resultado->fetch_assoc())
                                 {
                                     if($fila['password']!="")
                                     {
-                                        echo "<script>alertify.error('El usuario ya existe, coordine con el administrador para cambiar su contraseña');</script>";
-                                        echo "<div class='alert alert-danger container' role='alert'>El usuario ya existe, coordine con el administrador para cambiar su contraseña</div>"; 
+                                        echo "<script>alertify.error('El usuario ya existe, coordine con el administrador para cambiar su contraseña');</script>";//codigo de js alertify
+                                        echo "<div class='alert alert-danger container' role='alert'>El usuario ya existe, coordine con el administrador para cambiar su contraseña</div>"; //mensaje
                                     }
                                     else
                                     {
-                                        echo "<script>alertify.success('Encontrado');</script>"; 
-                                        echo "<div class='alert alert-success container' role='alert'>Por favor ingrese su contraseña</div>"; 
+                                        echo "<script>alertify.success('Encontrado');</script>"; //codigo de js alertify
+                                        echo "<div class='alert alert-success container' role='alert'>Por favor ingrese su contraseña</div>"; //mensaje
                         ?>
                         <form id="" class="form" action="" method="post">
                             <div class="form-group row">
@@ -110,14 +110,17 @@
 
                                     else
                                     {
-                                        echo "<script>alertify.success('Registrado correctamete');</script>"; 
-                                        echo "<div class='alert alert-success container' role='alert'>Registrado Correctamente</div>"; 
-                                        header("refresh:3;url=index.php"); 
+                                        echo "<script>alertify.success('Registrado correctamete');</script>"; //codigo de js alertify
+                                        echo "<div class='alert alert-success container' role='alert'>Registrado Correctamente</div>"; //mensaje
+                                       // Duerme durante cinco segundos.
+                                        //sleep(5); pero no muestra mensaje
+                                       //Establecer el encabezado de actualización utilizando PHP.
+                                        header("refresh:3;url=index.php"); //si muestra mensaje
                                     }
                                 }
                                 else
                                 {
-                                    echo "<script>alertify.success('No coinciden claves');</script>"; 
+                                    echo "<script>alertify.success('No coinciden claves');</script>"; //codigo de js alertify; //mensaje
                                 }
                             }
                     ?>
