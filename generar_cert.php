@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/vendor/autoload.php';?>
 <!doctype html>
 <html lang="es">
   <head>
@@ -151,24 +152,40 @@
                                       mkdir($ruta); //creamos la ruta osea crea las carpetas , cada archivo que se vaya creando va crear tambien su carpeta
                                   }
                                   //validacion en caso de archivos duplicados
-                                  if(!file_exists($archivo)) //si no existe el archivo
-                                  {
-                                      $resultado=@move_uploaded_file($_FILES["archivo"]["tmp_name"],$archivo); //mueve el archivo que estoy creando en el formulario, que archivo a que ruta lo voy a mover
-                                      //tmp_name ese es un nombre temporal que se le da a un archivo cuando lo cargas a un formulario
-                                      //archivo es la ruta completa donde se movera el archivo guardado
-                                      //la variable resultado retornara un true o un false si es true entonces se guardo correctamente
-                                      if($resultado) //si es verdadero
-                                      {
-                                          echo "<script>alertify.success('Certificado Creado Correctamente');</script>"; //codigo de js alertify
-                                          echo "<div class='p-3 mb-2 bg-success text-white container'>Certificado creado correctamente<div>"; //mensaje
-                                      }
-                                      else{
-                                          echo "<div class='p-3 mb-2 bg-danger text-white container'>Error al Guardar<div>"; //mensaje
-                                      }
-                                  }
-                                  else{
-                                      echo "<div class='p-3 mb-2 bg-danger text-white container'>el archivo ya existe<div>"; //mensaje
-                                  }
+								if(!file_exists($archivo)) //si no existe el archivo
+								{
+									$resultado=@move_uploaded_file($_FILES["archivo"]["tmp_name"],$archivo); //mueve el archivo que estoy creando en el formulario, que archivo a que ruta lo voy a mover
+									//tmp_name ese es un nombre temporal que se le da a un archivo cuando lo cargas a un formulario
+									//archivo es la ruta completa donde se movera el archivo guardado
+									//la variable resultado retornara un true o un false si es true entonces se guardo correctamente
+									if($resultado) //si es verdadero
+									{
+										$mpdf=new \Mpdf\Mpdf([ 
+											"mode" => "utf-8"
+										]);
+
+										$mpdf->SetImportUse();
+
+										$mpdf->percentSubset=0;
+
+										$search=array('NOMRE Y APELLIDOS DEL REPRESENTANTE DE LA EMPRESA');
+
+										$replacement=array('Kevin Arnold Arias Figueroa');
+
+										$mpdf->OverWrite($archivo, $search, $replacement, 'I', 'overrite.pdf' );
+
+										echo "<script>alertify.success('Certificado Creado Correctamente');</script>"; //codigo de js alertify
+										echo "<div class='p-3 mb-2 bg-success text-white container'>Certificado creado correctamente<div>"; //mensaje
+									}
+									else
+									{
+										echo "<div class='p-3 mb-2 bg-danger text-white container'>Error al Guardar<div>"; //mensaje
+									}
+								}
+								else
+								{
+									echo "<div class='p-3 mb-2 bg-danger text-white container'>el archivo ya existe<div>"; //mensaje
+								}
                               }   
                               else{
                                   echo "<div class='p-3 mb-2 bg-danger text-white container'>Archivo no permitido o demasiado pesado<div>"; //mensaje

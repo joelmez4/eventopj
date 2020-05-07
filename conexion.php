@@ -2,7 +2,7 @@
 	//crear objeto conexion
     $direccion='127.0.0.1';
     $usuario='root';
-    $password='';
+    $password='030191';
     $bd='bd_sis_eventosacademicos';
 	$miconex=new mysqli($direccion,$usuario,$password,$bd);
 	//comprobar conexion
