@@ -1,24 +1,26 @@
 <?php
     require('../conexion.php');
-    $salida=""; 
+    $salida=""; //todo lo que se mostrara en la pagina de index.php
     $query="select nro_evento,tipo_evento,nombre_evento,lugar,direccion,fecha,hora,estado from evento ORDER BY fecha DESC";
     if(isset($_POST['consulta'])){
-        $q=$miconex->real_escape_string($_POST['consulta']);
+        $q=$miconex->real_escape_string($_POST['consulta']); //cuestion de seguridad por si en la caj de texto viene un caracter especial
         $query="select nro_evento,tipo_evento,nombre_evento,lugar,direccion,fecha,hora,estado from evento
                 where tipo_evento like '%".$q."%' OR nombre_evento like '%".$q."%' OR lugar like '%".$q."%' ORDER BY fecha DESC";
     }
-    if((isset($_POST['desde'])) & (isset($_POST['hasta']))){ 
-        $desde=$_POST['desde']; 
-        $hasta=$_POST['hasta']; 
+    if((isset($_POST['desde'])) & (isset($_POST['hasta']))){ // si las fechas desde y hasta existen entonces
+        $desde=$_POST['desde']; //scamos la variable de la fecha inicio
+        $hasta=$_POST['hasta']; //sacamos la variable de la fecha fin
         $query="select nro_evento,tipo_evento,nombre_evento,lugar,direccion,fecha,hora,estado from evento where
         fecha BETWEEN '$desde' AND '$hasta' ORDER BY fecha DESC";
     }
-    $resultado=$miconex->query($query); 
+    $resultado=$miconex->query($query); // ejecutamos la consulta y lo guardamos en la variable resultado
     if(!$resultado=$miconex->query($query))
     {
         die ("No se pudo ejecutar la consulta por error en:[".$miconex->error."]");
     }
-    if($resultado->num_rows>0){ 
+    if($resultado->num_rows>0){  //si se encontro un elemento en la consulta
+        //concatenamos la variable salida puesto que salida es lo que mostrara al final en la pagina index.htmls
+        //class=d-none d-sm-block ---Solo cuando sea pequeño que se ocultela columna-->
         $salida.="<p class='lead'><span>Cantidad de Eventos: <b>".$resultado->num_rows."</b></span></p>
                 <table class='table table-hover table-active container mt-0 table-sm'>
                     <thead class='thead-dark'>
@@ -33,9 +35,9 @@
                         </tr>
                     </thead>
                     <tbody>"; 
-        while($fila=$resultado->fetch_assoc()) 
+        while($fila=$resultado->fetch_assoc()) //pasamos los resualdos de la consulta con fetch_assoc a un tipo arreglo de variable fila
             {
-                
+                //seguimos concatenando la variable salida
                 $salida.=" <tr>
                                 <td>".$fila['tipo_evento']."</td>
                                 <td class='text-justify'>".$fila['nombre_evento']."</td>

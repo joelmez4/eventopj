@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2020 a las 04:54:03
+-- Tiempo de generación: 06-05-2020 a las 20:04:19
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.11
 
@@ -56,6 +56,29 @@ INSERT INTO `asistentes_evento` (`id_asistente`, `dni_asistente`, `nombres_asist
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `certificado`
+--
+
+CREATE TABLE `certificado` (
+  `id_certificado` int(5) NOT NULL,
+  `nombre_cert` varchar(500) NOT NULL,
+  `anio` year(4) NOT NULL,
+  `nro_evento` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `certificado`
+--
+
+INSERT INTO `certificado` (`id_certificado`, `nombre_cert`, `anio`, `nro_evento`) VALUES
+(14, 'certificado sdfsd', 2020, 15),
+(15, 'certificado lavado de activos VRAE', 2020, 22),
+(16, 'cert taller asdas', 2020, 20),
+(17, 'covid', 2020, 25);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `evento`
 --
 
@@ -81,11 +104,12 @@ INSERT INTO `evento` (`nro_evento`, `tipo_evento`, `nombre_evento`, `ponentes`, 
 (15, 'sdfsd', 'sdfsdgdgh asddasdas asdasda', 'asdasdasd\r\nasdasdas', 'asdasdasd', 'asadasdas', '2020-04-08', '06:13:10.000000', 'cerrado'),
 (18, 'sdfdsd', 'sdfsdf', 'sdfsdf', 'sdfsdf', 'sdfsdf', '2020-04-07', '03:03:03.000000', 'abierto'),
 (19, 'sdfdsd', 'sdfsdf', 'sdfsdf', 'sdfsdf', 'sdfsdf', '2020-04-07', '03:03:03.000000', 'abierto'),
-(20, 'taller', 'asdas asdasd asd assdas da dasdas asd as das a sdas dasd ', 'asd as das dads as dasd as d', 'adsadasd ', 'asdasd as d', '2020-04-21', '12:57:00.000000', 'abierto'),
+(20, 'taller', 'asdas asdasd asd assdas da dasdas asd as das a sdas dasd ', 'asd as das dads as dasd as d', 'adsadasd ', 'asdasd as d', '2020-04-21', '12:57:00.000000', 'cerrado'),
 (21, 'taller', 'asdas asdasd asd assdas da dasdas asd as das a sdas dasd ', 'asd as das dads as dasd as d', 'adsadasd ', 'asdasd as d', '2020-04-29', '12:20:00.000000', 'abierto'),
 (22, 'Curso', 'Lavado de Activos VRAE', 'Dr. CRISTHIAN MARIO\r\nDr. CHRISTOPHER ARTURO BOBBIO CAMAC\r\n', 'Auditorio Jose Maria Arguedas de la Corte Superior de Justicia de Apurimac', 'Av. Diaz Barcenas Nro 100', '2020-04-16', '14:00:00.000000', 'cerrado'),
 (23, 'Seminario', 'Lavado de Activos VRAE', 'Dr. MARIO\r\nDr. LUIS FELIX PACHECO ZANABRIA\r\n', 'Auditorio Jose Maria Arguedas de la Corte Superior de Justicia de Apurimac', 'Av. Diaz Barcenas Nro 100', '2020-04-30', '08:00:00.000000', 'abierto'),
-(24, 'Seminario', 'Lavado de Activos VRAE', 'Dr. MARIO\r\nDr. LUIS FELIX PACHECO ZANABRIA\r\n', 'Auditorio Jose Maria Arguedas de la Corte Superior de Justicia de Apurimac', 'Av. Diaz Barcenas Nro 100', '2020-04-30', '08:00:00.000000', 'abierto');
+(24, 'Seminario', 'Lavado de Activos VRAE', 'Dr. MARIO\r\nDr. LUIS FELIX PACHECO ZANABRIA\r\n', 'Auditorio Jose Maria Arguedas de la Corte Superior de Justicia de Apurimac', 'Av. Diaz Barcenas Nro 100', '2020-04-30', '08:00:00.000000', 'abierto'),
+(25, 'Curso', 'covid', 'Dr. LUIS FELIX PACHECO ZANABRIA\r\n', 'faceboj', 'Av. Diaz Barcenas Nro 100', '2020-05-06', '15:30:00.000000', 'cerrado');
 
 -- --------------------------------------------------------
 
@@ -132,6 +156,7 @@ CREATE TABLE `inscripcion` (
   `hora_inscripcion` time(6) NOT NULL,
   `correo` varchar(300) NOT NULL,
   `telefono` int(9) NOT NULL,
+  `habilitacion_cert` varchar(50) NOT NULL,
   `nro_evento` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -139,11 +164,14 @@ CREATE TABLE `inscripcion` (
 -- Volcado de datos para la tabla `inscripcion`
 --
 
-INSERT INTO `inscripcion` (`id_inscripcion`, `dni_inscripcion`, `nombres_inscripcion`, `apellidos_inscripcion`, `fecha_inscripcion`, `hora_inscripcion`, `correo`, `telefono`, `nro_evento`) VALUES
-(2, 5555555, 'wefwe', 'wefwef', '2020-04-30', '08:00:00.000000', 'cvrer', 888888, 13),
-(3, 47344754, 'CRISTHIAN MARIO', 'VERA HUAMANI', '2020-04-18', '12:56:14.000000', 'cverah@pj.gob.pe', 999999999, 20),
-(4, 31007202, 'MARIO', 'VERA UTANI', '2020-04-18', '14:17:01.000000', 'cverah@pj.gob.pe', 666666666, 20),
-(6, 31006142, 'LAURIANA', 'HUAMANI CHAVEZ', '2020-04-18', '14:29:27.000000', 'cverah@pj.gob.pe', 444444444, 20);
+INSERT INTO `inscripcion` (`id_inscripcion`, `dni_inscripcion`, `nombres_inscripcion`, `apellidos_inscripcion`, `fecha_inscripcion`, `hora_inscripcion`, `correo`, `telefono`, `habilitacion_cert`, `nro_evento`) VALUES
+(2, 5555555, 'wefwe', 'wefwef', '2020-04-30', '08:00:00.000000', 'cvrer', 888888, '', 13),
+(3, 47344754, 'CRISTHIAN MARIO', 'VERA HUAMANI', '2020-04-18', '12:56:14.000000', 'cverah@pj.gob.pe', 999999999, 'habilitado', 20),
+(4, 31007202, 'MARIO', 'VERA UTANI', '2020-04-18', '14:17:01.000000', 'cverah@pj.gob.pe', 666666666, 'habilitado', 20),
+(6, 31006142, 'LAURIANA', 'HUAMANI CHAVEZ', '2020-04-18', '14:29:27.000000', 'cverah@pj.gob.pe', 444444444, '', 20),
+(7, 74128616, 'JOEL', 'MEZA BACA', '2020-05-06', '12:39:12.000000', 'lovob@gmail.com', 999999999, 'habilitado', 25),
+(8, 44444446, 'asdsdg', 'xdfsdgfsd', '2020-05-06', '12:44:00.000000', 'c@gmail.com666', 999999999, 'deshabilitado', 25),
+(9, 22222222, 'sabino ', 'kari benites', '2020-05-06', '12:51:36.000000', 'c@gmail.com666', 888888888, 'habilitado', 25);
 
 -- --------------------------------------------------------
 
@@ -186,6 +214,13 @@ ALTER TABLE `asistentes_evento`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
+-- Indices de la tabla `certificado`
+--
+ALTER TABLE `certificado`
+  ADD PRIMARY KEY (`id_certificado`),
+  ADD KEY `id_asistente` (`nro_evento`);
+
+--
 -- Indices de la tabla `evento`
 --
 ALTER TABLE `evento`
@@ -221,10 +256,16 @@ ALTER TABLE `asistentes_evento`
   MODIFY `id_asistente` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT de la tabla `certificado`
+--
+ALTER TABLE `certificado`
+  MODIFY `id_certificado` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `nro_evento` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `nro_evento` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `expositor`
@@ -236,7 +277,7 @@ ALTER TABLE `expositor`
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id_inscripcion` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_inscripcion` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
@@ -248,6 +289,12 @@ ALTER TABLE `inscripcion`
 ALTER TABLE `asistentes_evento`
   ADD CONSTRAINT `asistentes_evento_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   ADD CONSTRAINT `asistentes_evento_ibfk_3` FOREIGN KEY (`nro_evento`) REFERENCES `evento` (`nro_evento`);
+
+--
+-- Filtros para la tabla `certificado`
+--
+ALTER TABLE `certificado`
+  ADD CONSTRAINT `certificado_ibfk_1` FOREIGN KEY (`nro_evento`) REFERENCES `evento` (`nro_evento`);
 
 --
 -- Filtros para la tabla `inscripcion`

@@ -9,14 +9,14 @@
     <link rel="stylesheet" type="text/css" href="css/alertify.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
     <script src="jquery-3.1.1.min.js"></script>
-    <script src="js/jquery.js"></script> 
+    <script src="js/jquery.js"></script> <!-- Para enviar modal se tiene que poner parte arriba este jquery sino no abrira el modal-->
     <script src="js/alertify.js"></script>
     <script src="js/bootstrap.js"></script>
-    
+    <!-- script habilitar check box-->
     <script>
 		function habilitar()
 		{
-            
+            // habilitamos
             if (document.getElementById("check_activar").checked)
             {
                 document.getElementById("dni_inscrito").readOnly=false;
@@ -28,7 +28,7 @@
             }
             else
             {
-               
+                // deshabilitamos
                 document.getElementById("dni_inscrito").readOnly=true;
                 document.getElementById("nombres_inscrito").readOnly=true;
                 document.getElementById("apellidos_inscrito").readOnly=true;
@@ -36,7 +36,8 @@
             
 		}
     </script>
-
+<!-- fin script checkbox-->
+<!-- reloj en checkbox-->
     <script language="JavaScript">
         function mueveReloj(){
             momentoActual = new Date();
@@ -56,7 +57,7 @@
             horaImprimible=hora+":"+minuto+":"+segundo;
 
             document.registro_inscripcion.horabd.value = horaImprimible;
-            
+            //document.getElementById('horabd').value
 
             setTimeout("mueveReloj()",1000)
         }
@@ -64,7 +65,7 @@
   </head>
   <body  background="images/pj2-transparente.png" onload="mueveReloj()">
   
- >
+    <!-- Inicio conexion con base de datos-->
     <?php
       require('conexion.php');  
       $nro_evento=$_GET['id_evento'];
@@ -79,7 +80,8 @@
           $fecha_evento=$fila['fecha'];
           $hora_evento=$fila['hora'];
     ?>   
-  
+    <!-- Fin conexion con base de datos-->
+    <!-- inicio menu -->
     <nav style="background-image: url('images/pj2.png'); background-repeat: repeat-x;  background-size: 40px 40px;">
         <img src="images/pj2.png" width="40" height="40"  alt="">
     </nav>
@@ -100,7 +102,8 @@
         
         <h3 class="display-5 container"><small class="text-muted">INSCRIBITE</small></h3>
         <div class="container text-danger text-justify mb-2"> *En caso de que el curso tenga certificacion se recomienda realizar la busqueda por dni, caso contrario los datos ingresados manualmente sera responsabilidad del interesado.</div>
-      
+        <!-- Inicio Cabecera-->
+        <!-- Inicio Formulario buscar DNI-->
         <form class="container">
            <div class="form-group row">
                 <label class="col-sm-2 col-form-label"><strong>Ingrese DNI:</strong></label>
@@ -118,9 +121,10 @@
                 </div>
             </div> 
         </form>
-      
-        <div class="text-danger container"> *Verificacion de datos --- si el valor es null verificar que el dni es correcto</div>
+        <!-- FIN Formulario buscar DNI-->
        
+        <div class="text-danger container"> *Verificacion de datos --- si el valor es null verificar que el dni es correcto</div>
+        <!-- Inicio registrar inscripcion-->
         <form class="container" name="registro_inscripcion" method="post" action="">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label"><strong>Su DNI:</strong></label>
@@ -148,14 +152,14 @@
                     <input type="text" class="form-control" id="" name="telefono_inscrito" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
                 </div>
             </div>
-          
+            <!-- Fecha y hora actual_ocultos-->
             <input type="hidden" name="fecha_hoy" value="<?php echo fecha_actual(); ?>">
             <input type="hidden" id="" name="horabd" value="">
             <input type="hidden" id="" name="estado_actual" value="<?php echo $fila['estado'];?>">
             <input type="hidden" id="" name="fecha_evento1" value="<?php echo $fecha_evento;?>">
             <input type="hidden" id="" name="hora_evento1" value="<?php echo $hora_evento;?>">
             <input type="hidden" id="" name="nro_evento1" value="<?php echo $nro_evento;?>">
-           
+             <!-- Fin_ocultos-->
             <div class="form-group row text-center">
                 <div class="col-sm-4">
                     <button type="submit" name="btn_inscribir" class="btn btn-primary mb-2 btn-block">Inscribir</button>
@@ -169,7 +173,9 @@
             </div>
         </form>
         <?php }?>
+        <!-- Fin registrar inscripcion-->
         
+        <!-- script busqueda dni -->
           <script>
             $(function(){
                 $('#botoncito').on('click', function(){
@@ -190,7 +196,8 @@
                 });
             });
           </script>
-      
+        <!-- script busqueda dni -->
+        <!-- Inicio PHP para inscripcion-->
         <?php
         if(isset($_POST['btn_inscribir'])){
             $dni_inscrito1=$_POST['dni_inscrito1'];
@@ -204,42 +211,43 @@
             $estado_actual=$_POST['estado_actual'];
             $fecha_hora_evento1=$_POST['fecha_evento1']." ".$_POST['hora_evento1'];    
             $nro_evento1=$_POST['nro_evento1'];
-     
-            $consulta="select * from inscripcion where dni_inscripcion='$dni_inscrito1' and nombres_inscripcion='$nombres_inscrito1'";
+            //consulta para insertar inscripcion
+            $consulta="select * from inscripcion where dni_inscripcion='$dni_inscrito1' and nombres_inscripcion='$nombres_inscrito1'
+             and nro_evento='$nro_evento1'";
             if(!$resultado=$miconex->query($consulta))
             {
                  die ("No se pudo ejecutar la consulta por error en:[".$miconex->error."]");
             }
-       
+            //si encuentra inscrito con el mismo nombre
             if($resultado->num_rows>0)
             {
                 echo "<script>alertify.error('Ya existe inscrito con el mismo nombre o DNI, no se pudo insertar');</script>";
                 echo "<div class='p-3 mb-2 bg-danger text-white container'>Ya existe inscrito con el mismo nombre o DNI, no se pudo insertar. Dirijase a Verificar Inscripcion para ver su ticket de entrada</div>"; //mensaje
             }
-    
+            //si el dni o nombre es diferente de vacio o fecha de evento esta dentro de la fecha actual
             elseif(($estado_actual=="abierto")&&($fecha_hora_evento1>=$fecha_hora_hoy)&&($dni_inscrito1!=" ")&&($nombres_inscrito1!=" "))
             {
                 $consulta="insert into inscripcion values('','$dni_inscrito1','$nombres_inscrito1',
-                    '$apellidos_insritos1','$fecha_hoy','$hora_hoy','$correo_inscrito','$telefono_inscrito','$nro_evento1')";
+                    '$apellidos_insritos1','$fecha_hoy','$hora_hoy','$correo_inscrito','$telefono_inscrito','deshabilitado','$nro_evento1')";
                     if(!$miconex->query($consulta))
                     {
                         die ("no se pudo insertar insertar por error en: [".$miconex->error."]");
                     }
                     else
                     {
-                        echo "<script>alertify.success('Inscrito Correctamente, verifique su ticket de ingreso en verificar inscripcion');</script>"; 
-                        echo "<div class='p-3 mb-2 bg-success text-white container'>Inscrito Correctamente, verifique su ticket de ingreso en verificar inscripcion</div>"; 
+                        echo "<script>alertify.success('Inscrito Correctamente, verifique su ticket de ingreso en verificar inscripcion');</script>"; //codigo de js alertify
+                        echo "<div class='p-3 mb-2 bg-success text-white container'>Inscrito Correctamente, verifique su ticket de ingreso en verificar inscripcion</div>"; //mensaje
                     }
                                
             }
             else{
-                echo "<script>alertify.error('no se pudo insertar, el evento ya no se encuentra disponible por fecha y hora pasada');</script>";
-                echo "<div class='p-3 mb-2 bg-danger text-white container'>El evento ya no se encuentra disponible por fecha y hora pasada</div>"; 
+                echo "<script>alertify.error('no se pudo insertar, el evento ya no se encuentra disponible por fecha y hora pasada');</script>";//codigo de js alertify
+                echo "<div class='p-3 mb-2 bg-danger text-white container'>El evento ya no se encuentra disponible por fecha y hora pasada</div>"; //mensaje
             }
         }
         ?>
         <br/>
-  
+  <!-- Inicio Pie de Pagina-->
     
         <footer class="footer">
             <p><b>© 2020 OFICINA DE ESTADISTICA E INFORMATICA - CSJAP</b></p>

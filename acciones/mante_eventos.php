@@ -1,10 +1,11 @@
   <?php
-      
-      $id_even=$_POST['nro_evento']; 
+      // mostrar eventos en un modal
+       //conexion a bd
+      $id_even=$_POST['nro_evento']; //extraemos el id
       if($id_even!='')
       {
         include('../conexion.php');
-        $id_evento=substr($id_even,1,-1); 
+        $id_evento=substr($id_even,1,-1); //quita el primer item y el segndo itemm antes /id/ ahora id
         $query="select * from evento where nro_evento='$id_evento'";
         if(!$resultado=$miconex->query($query))
             {
