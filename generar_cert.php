@@ -69,11 +69,11 @@
                   </div>
               </div> 
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label"><strong>Escoja una imagen (jpg,png):</strong></label>
+                <label class="col-sm-3 col-form-label"><strong>Escoja un archivo PDF:</strong></label>
                 <div class="col-sm-5">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="" name="archivo" required accept="image/*">
-                    <label class="custom-file-label" for="validatedCustomFile">-- Formato .png , .jpg --</label>
+                    <input type="file" class="custom-file-input" id="" name="archivo" required accept="application/pdf">
+                    <label class="custom-file-label" for="validatedCustomFile">-- Formato .pdf --</label>
                   </div>
                 </div>
                 <script>
@@ -136,7 +136,7 @@
                           {
                               //fomatos permitidos a cargar
                               //"application/pdf"
-                              $permitidos=array("image/png","image/jpeg"); //permitir solo en fomrato png y pdf
+                              $permitidos=array("application/pdf"); //permitir solo en fomrato png y pdf
                               $limite_kb=5000;
                               //si el archivo es de tipo pdf o png y no pesa menor que 5000 kb osea 5megas
                               if(in_array($_FILES["archivo"]["type"],$permitidos) && $_FILES["archivo"]["size"]<=$limite_kb*1024)
